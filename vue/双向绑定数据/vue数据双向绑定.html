@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+</head>
+<body>
+
+<div id="app" >
+     <input type="text" id="a" v-model="text">
+     {{text}}
+</div>
+
+<script type="text/javascript">
+    
+    function Compile(node, vm) {
+      if (node) {this.$flag = this.node2Fragment(node, vm)};
+      return this.$flag;
+    }
+    Compile.prototype = {
+      node2Fragment:function (node, vm) {
+        var self = this;
+        var flag = document.createDocumentFragment() , child;
+        while (child = node.firstChild) {
+          self.compileEle(child, vm);
+          flag.appendChild(child); //将所有子节点添加到fragment中，child是指向元素首个子节点的引用。将child引用指向的对象append到父对象的末尾，原来child引用的对象就跳到了frag对象的末尾，而child就指向了本来是排在第二个的元素对象。如此循环下去，链接就逐个往后跳了
+
+          console.log(flag)
+        }
+
+        return flag;
+      },
+      compileEle:function (node, vm){
+        var reg = /\{\{(.*)\}\}/;
+        //节点类型为元素
+        if (node.nodeType === 1) {
+          var attr = node.attributes;
+          for (var i = 0; i < attr.length; i++) {
+
+            if (attr[i].nodeName == 'v-model') {
+
+              var name = attr[i].nodeValue;
+
+              node.addEventListener('input', function(e){
+                vm.data[name] = e.target.value
+              })
+              node.value = vm.data[name];
+
+              node.removeAttribute('v-model');            
+            }
+
+          }
+        }
+
+        if (node.nodeType === 3 ) {
+          console.log(node.nodeValue)
+          if (reg.test(node.nodeValue)) {
+            var name  = RegExp.$1;
+           
+            name = name.trim();
+            node.nodeValue = vm.data[name]
+          }
+        }
+      }
+    }
+
+    function Vue(options) {
+      this.data = options.data;
+      var id = options.el;
+      var dom = new Compile(document.getElementById(id),this);
+       document.getElementById(id).appendChild(dom)
+    }
+   
+   var vm = new Vue({
+    el:"app",
+    data:{
+      text:"hello , world"
+    }
+   })
+</script>
+</body>
+</html>

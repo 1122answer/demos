@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+</head>
+<body>
+
+<div id="app" >
+     <p>{{ message.name }}</p>
+     <p>{{ message.otherName }}</p>
+     <p>{{ message.age }}</p>
+     <!-- <p v-for ="value in message">{{value}}</p> -->
+     <p v-for ="item in list">{{item}}</p> 
+     <button  @click="ab">按钮</button>
+</div>
+
+<script type="text/javascript">
+    
+  var app = new Vue({
+      el: '#app',
+      data: {
+          message :{
+            name:"lcf" 
+          } ,
+          message2:"to be courage",
+          list: [1,2,3]
+      },
+      mounted:function () {
+        //this.message3 = "aaa"  不允许在已经创建的实例上动态添加新的根级响应式属性
+        //Vue.set(this.message,"age", 27)  //向嵌套对象添加响应式属性
+        //this.message.age = 27   //添加非响应式属性 但是当与Vue.set一起设置时，会变成动态属性，原理暂时还未理解
+       
+       /*this.message = Object.assign({},this.message,{  //一次添加多个属性
+          age : 27,
+          favoriteColor: "Vue Green"
+        })   */
+
+
+       var vList = this.message
+          vList.name = "fcl";
+        
+        console.log(this.message.age)
+      },
+      methods:{
+      	ab: function() {
+          //this.list = this.list.concat([5])
+          var vList = this.list
+          vList =[].concat(this.list); 
+          vList.push(6)
+          //this.message.age  =230
+           /*this.message.otherName  ="1122"
+      		
+           this.message.name = "lcfxs"*/
+          console.log(vList)
+      	}
+      }
+    })
+
+
+  var collection3 = [
+    {name: 'aa', size: 'L'},
+    {name: 'bb', size: 'M'}
+  ];
+
+  var collection2 = [
+    {name: 'aa', size: 'L'},
+   
+  ];
+  var result3 = _.filter(collection3, function(item){
+       _.forEach(collection2,function (item2) {
+           return item2.name != item.name
+       })
+  });
+
+</script>
+</body>
+</html>

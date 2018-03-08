@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+</head>
+<body>
+
+<div id="app" @click = "ab()">
+     <p>{{ message }}</p>
+</div>
+
+<script type="text/javascript">
+    
+  var app = new Vue({
+      el: '#app',
+      data: {
+          message : "xuxiao is boy" 
+      },
+       beforeCreate: function () {
+                console.group('beforeCreate 创建前状态===============》');
+               console.log("%c%s", "color:red" , "el     : " + this.$el); //undefined
+               console.log("%c%s", "color:red","data   : " + this.$data); //undefined 
+               console.log("%c%s", "color:red","message: " + this.message) ;
+              $("#app").unbind()
+
+        },
+        created: function () {
+            console.group('created 创建完毕状态===============》');
+            console.log("%c%s", "color:red","el     : " + this.$el); //undefined
+               console.log("%c%s", "color:red","data   : " + this.$data); //已被初始化 
+               console.log("%c%s", "color:red","message: " + this.message); //已被初始化
+               $("#app").off()
+
+        },
+        beforeMount: function () {
+            console.group('beforeMount 挂载前状态===============》');
+            console.log("%c%s", "color:red","el     : " + (this.$el)); //已被初始化
+            console.log(this.$el);
+               console.log("%c%s", "color:red","data   : " + this.$data); //已被初始化  
+               console.log("%c%s", "color:red","message: " + this.message); //已被初始化 
+            $("#app").off()
+        },
+        mounted: function () {
+            console.group('mounted 挂载结束状态===============》');
+            console.log("%c%s", "color:red","el     : " + this.$el); //已被初始化
+            console.log(this.$el);    
+            console.log("%c%s", "color:red","data   : " + this.$data); //已被初始化
+            console.log("%c%s", "color:red","message: " + this.message); //已被初始化 
+            $("#app").off()
+            $("#app").click() 
+        },
+        beforeUpdate: function () {
+            console.group('beforeUpdate 更新前状态===============》');
+            console.log("%c%s", "color:red","el     : " + this.$el);
+            console.log(this.$el);   
+               console.log("%c%s", "color:red","data   : " + this.$data); 
+               console.log("%c%s", "color:red","message: " + this.message); 
+        },
+        updated: function () {
+            console.group('updated 更新完成状态===============》');
+            console.log("%c%s", "color:red","el     : " + this.$el);
+            console.log(this.$el); 
+               console.log("%c%s", "color:red","data   : " + this.$data); 
+               console.log("%c%s", "color:red","message: " + this.message); 
+        },
+        beforeDestroy: function () {
+            console.group('beforeDestroy 销毁前状态===============》');
+            console.log("%c%s", "color:red","el     : " + this.$el);
+            console.log(this.$el);    
+               console.log("%c%s", "color:red","data   : " + this.$data); 
+               console.log("%c%s", "color:red","message: " + this.message); 
+        },
+        destroyed: function () {
+            console.group('destroyed 销毁完成状态===============》');
+            console.log("%c%s", "color:red","el     : " + this.$el);
+            console.log(this.$el);  
+               console.log("%c%s", "color:red","data   : " + this.$data); 
+               console.log("%c%s", "color:red","message: " + this.message)
+        },
+        methods:{
+        	ab: function() {
+        		alert(2)
+        	}
+        }
+    })
+</script>
+</body>
+</html>

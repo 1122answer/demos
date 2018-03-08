@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+    <script src="tab.js"></script>
+</head>
+<body>
+
+<div id="app" >
+      <p>{{ message }}</p>
+      <my-component v-model="tab" :options="options"></my-component>
+      <p class="info">{{tab}}</p>
+</div>
+<script type="text/x-template" id="tab-template">
+  <div>
+    <div :class="item | tabItemClass" v-for="(item, i) in options":key="i" @click="onTabSelect(item)">
+    {{item.text}}{{value}}</div>
+  </div>
+</script>
+<script type="text/javascript">
+  console.log(tab)
+  Vue.component('my-component', tab)
+  var app = new Vue({
+      el: '#app',
+      data: {
+          message : "xuxiao is boy" ,
+          tab: 'bj',
+          options: [{
+              value: 'bj',
+              text: '北京'
+          }, {
+              value: 'sh',
+              text: '上海',
+              disabled: true
+          }, {
+              value: 'gz',
+              text: '广州'
+          }, {
+              value: 'sz',
+              text: '深圳'
+          }]
+      },
+      methods:{
+      	ab: function() {
+      		alert(2)
+      	}
+      }
+    })
+</script>
+</body>
+</html>

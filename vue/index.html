@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>结构化工具</title>
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 12px;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+
+        .hidden {
+            width: 0px;
+            height: 0px;
+            display: none !important;
+        }
+
+        .inline-block-container {
+            font-size: 0;
+            -webkit-text-size-adjust: none;
+            width: 100%;
+            height: 100px;
+            background: #233669;
+        }
+
+        .f-left {
+            float: left;
+        }
+
+        .f-rigth {
+            float: right;
+        }
+
+        .main-content {
+        }
+
+        .timeline {
+            display: block;
+            width: 90%;
+            margin: 0 auto;
+            overflow: auto;
+            white-space: nowrap;
+            padding: 72px 25px 10px;
+        }
+
+            .timeline > li {
+                list-style: none;
+                width: 190px;
+                display: inline-block;
+                font-size: 14px;
+                vertical-align: top;
+                transition: all .3s ease;
+            }
+
+            .timeline .upside {
+                border-bottom: 5px solid #7388bf;
+                position: relative;
+                height: 25px;
+                text-align: center;
+            }
+
+            .timeline li .points {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: #7388bf url(img/clock.png) center no-repeat;
+                position: absolute;
+                top: 10px;
+            }
+
+                .timeline li .points:hover,
+                .timeline li.selected .points,
+                .timeline li.selected .points span,
+                .timeline li .points:hover span {
+                    background-color: #d5b45d;
+                }
+
+                    .timeline li .points:hover span,
+                    .timeline li.selected .points span {
+                        border-color: #d5b45d;
+                    }
+
+                        .timeline li .points:hover span::before,
+                        .timeline li .points:hover span::after,
+                        .timeline li.selected .points span:before,
+                        .timeline li.selected .points span:after {
+                            border-color: #d5b45d transparent transparent transparent;
+                        }
+
+            .timeline li.selected {
+                width: 230px;
+            }
+
+            .timeline .points span {
+                position: absolute;
+                display: block;
+                padding: 0 18px;
+                height: 25px;
+                border-radius: 5px;
+                line-height: 25px;
+                color: #fff;
+                text-align: center;
+                border: 1px solid #7388bf;
+                top: -50px;
+                left: 0px;
+                transform: translateX(-50%);
+                margin-left: 20px;
+            }
+
+                .timeline .points span::after {
+                    content: "";
+                    position: absolute;
+                    top: 26px;
+                    left: 50%;
+                    margin-left: -10px;
+                    width: 0;
+                    height: 0;
+                    border-width: 10px;
+                    border-style: solid;
+                    border-color: #7388bf transparent transparent transparent;
+                }
+
+                .timeline .points span::before {
+                    content: "";
+                    position: absolute;
+                    top: 25px;
+                    left: 50%;
+                    margin-left: -10px;
+                    width: 0;
+                    height: 0;
+                    border-width: 10px;
+                    border-style: solid;
+                    border-color: #233669 transparent transparent transparent;
+                    z-index: 1;
+                }
+
+            .timeline .upside .time {
+                color: #d5b45d;
+                font-size: 12px;
+                text-indent: 35px;
+            }
+
+            .timeline > li:hover > .upside, .timeline > li.selected > .upside {
+                border-bottom: 5px solid #d5b45d;
+            }
+
+            .timeline .underside {
+                padding-top: 5px;
+                text-align: center;
+            }
+
+            .timeline li.selected .
+            underside {
+                color: #d5b45d;
+            }
+
+            .period-detail {
+                width: 80%;
+                margin: 85px auto;
+            }
+
+            .period-detail h2 .small {
+                font-size: xx-small;
+                padding-left: 8px;
+            }
+
+            .period-detail > h3 {
+                margin: 5px auto;
+            }
+
+            .period-detail > ul, .period-detail > p {
+                margin-left: 10px;
+            }
+
+            .period-detail .period-dates {
+                position: relative;
+                height: 45px;
+                padding: 15px 0;
+            }
+
+            .period-detail .period-dates .line {
+                content:'';
+                display:block;
+                width: 100%;
+                border: none;
+                border-top: 5px solid #d5b45d;
+                position: absolute;
+                top: 35px;
+                /*left:50%;
+                margin-left:-420px;*/
+            }
+            .period-detail .period-dates .line span{
+                display: block;
+                height: 4px;
+                position: absolute;
+                background: #c49411;
+                top: -5px;
+                z-index: 2;
+                box-sizing:border-box;
+                border-left:2px solid #fff
+            }
+            .period-detail .period-dates .date {
+                position: absolute;
+                display: inline-block;
+                top:0;
+                z-index:3;
+                transition:all .3s ease;
+            }
+             .period-detail .period-dates .date.ui-draggable-dragging{
+                 font-weight:700;
+             }
+            .period-detail .period-dates .date:hover{
+                cursor:move;
+            }
+            .period-detail .period-dates .date-point {
+                width: 30px;
+                height: 30px;
+                background: url(img/cicle.png);
+                position: absolute;
+                top: 21px;
+            }
+
+            .period-detail .period-dates .date-day {
+                padding-bottom: 40px;
+                margin-left: -10px;
+                min-width:90px;
+                position:relative;
+
+            }
+            .period-detail .period-dates .date:first-child .date-day,
+            .period-detail .period-dates .date.end-date .date-day{
+                top:-20px;
+                
+                background:url(img/triangle.png) 20px bottom no-repeat;
+            }
+            .period-detail .period-dates .date-title {
+                padding-top: 18px;
+                transform: rotate(30deg);
+                margin-left: 11px;
+                text-indent: -3px;
+            }
+
+            .period-detail .date:last-child .date-title {
+                text-indent: -16px;
+                margin-left: 18px;
+                padding-top: 11px;
+            }
+
+            .period-detail .period-fees {
+                list-style: none;
+            }
+
+            .period-detail .period-fees > li {
+                display: inline-block;
+                padding: 5px 12px;
+                margin-right: 20px;
+                border: 1px solid #d5b45d;
+                border-radius: 3px;
+                margin-bottom: 10px;
+                vertical-align:top;
+                position:relative;
+            }
+            .period-detail .period-fees > li .close{
+                position: absolute;
+                padding: 2px 5px;
+                border-radius: 50%;
+                border: 1px solid #d8d8d8;
+                right: -8px;
+                top: -10px;
+                font-style: normal;
+                font-size: 12px;
+                transform: scale(0.8);
+                background: #fff;
+                color: #999;
+                display: none;
+                cursor:default;
+                transition:all .3s linear;
+            }
+            .period-detail .period-fees > li .close:hover{
+                background:#233669;
+                color:#fff;
+            }
+             .period-detail .period-fees > li:hover .close{
+                 display:block;
+             }
+            .period-detail .payment-fees {
+                margin-left: 20px;
+            }
+            /*.period-detail .payment-plan {  margin-right: 20px; }*/
+            .period-detail .payment-fees .fee {
+                display: inline-block;
+                padding: 4px 12px;
+                border: 1px solid #ddd;
+                margin-right: 8px;
+                border-radius: 3px;
+                margin-bottom: 10px;
+            }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 8px;
+            background-color: #d5b45d;
+        }
+
+            ::-webkit-scrollbar:hover {
+                cursor: move;
+            }
+
+        ::-webkit-scrollbar-track {
+            background: #f5f5f5;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #d8d8d8;
+        }
+
+        ::-webkit-scrollbar-corner {
+            background: #fdfdfd;
+        }
+
+        .box-container {
+            position: relative;
+            padding: 2% 5%;
+            width: 80%;
+            min-height: 100px;
+            box-shadow: 0 0 4px rgba(0,0,0,.2);
+            margin-left: 10%;
+            margin-bottom: 30px;
+            box-sizing: border-box;
+        }
+
+        .box-container .title {
+            position: absolute;
+            left: -10%;
+            top: 0.5%;
+            padding: 5px 27px;
+            background-repeat: no-repeat;
+            background-position: left center;
+            z-index: 1;
+        }
+
+        .box-container::after {
+            content: '';
+            position: absolute;
+            display: block;
+            width: 1px;
+            height: calc(100% + 30px);
+            background: #d5b45d;
+            left: -9%;
+            top: 10px;
+            z-index: 0;
+        }
+
+        .box-container:last-child::after {
+            display: none;
+        }
+
+        .period-dates-container .title {
+            background-image: url(img/report-dates.png);
+        }
+
+        .period-fees-container .title {
+            background-image: url(img/fees.png);
+        }
+
+        .period-events-container .title {
+            background-image: url(img/events.png);
+        }
+
+        .payment-plan-container .title {
+            background-image: url(img/payment-plan.png);
+        }
+
+        .period-detail > h2 {
+            padding: 10px 10%;
+        }
+
+        .payment-plan-container {
+            padding: 0;
+        }
+
+        .payment-plan-container .payment-plan {
+            width: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            border-right: 1px solid #d8d8d8;
+            vertical-align: top;
+        }
+
+        .payment-plan-container .payment-plan h4 {
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background: #d5b45d;
+            color: #fff;
+        }
+
+        .payment-plan-container .payment-plan.right h4 {
+            background: #eee;
+            color: #000;
+        }
+
+        .payment-plan-container .payment-plan ul {
+            list-style: decimal;
+            padding: 15px 20px;
+        }
+
+        .period-dates-container {
+            padding: 5% 5%;
+        }
+        .tool-container .tool{
+            position:fixed;
+            padding:0 15px 20px 15px;
+            box-shadow:1px 1px 4px rgba(0,0,0,.2);
+            right:0;
+            left:auto;
+            top:20%;
+            width:12%;
+            background:#fdfdfd;
+            z-index:10;
+            border-radius:4px;
+            transition:all .3s linear;
+        }
+        .tool-container .tool.slide{
+            right:-210px!important;
+            left:auto!important;
+            /*transform:translateX(100%);*/
+            
+        }
+        .tool-container .payment-plan-tool.slide{
+            left:-210px!important;
+            right:auto!important;
+            /*transform:translateX(-100%);*/
+            
+        }
+         .tool-container .tool h3{
+             color:#233669;
+             text-align:center;
+             height:30px;
+             line-height:30px;
+         }
+         .tool-container .tool h3:hover{
+             cursor:move
+         }
+        .tool-container .tool.event-tool{
+            top:calc(20% + 300px);
+        }
+        .tool .list{
+            display:block;
+            height:200px;
+            overflow-y:auto;
+            padding:15px 0;
+            list-style:none;
+            
+        }
+          .tool .list li .close{
+              display:none;
+          }
+        .tool .list li span{
+            display: inline-block;
+            padding: 4px 12px;
+            margin-bottom: 5px;
+            border: 1px solid #989ba5;
+            border-radius: 4px;
+            width: 90%;
+            box-sizing: border-box;
+            
+        }
+         .tool-container .payment-plan-tool{
+             left:0;
+             right:auto;
+            
+         }
+         .tool-container .arrow{
+             position:absolute;
+             left:-20px;
+             top:50%;
+             display:block;
+             width:10px;
+             height:auto;
+             padding:5px 5px;
+             background:#233669;
+             color:#fff;
+             border-radius:4px 0 0 4px;
+             transform:translateY(-50%);
+             cursor:default;
+         }
+         .tool-container .payment-plan-tool  .arrow{
+             cursor:default;
+             left:100%;
+             border-radius:0 4px 4px 0;
+         }
+         .period-fees li.sortable-placeholder{
+             min-width:80px;
+             height:28px;
+             box-sizing:border-box;
+             border:1px dashed #d5b45d;
+             
+         }
+         #fees li.ui-sortable-helper , #fees-tool li.ui-sortable-helper span {
+             background:#d5b45d;
+             border:1px solid #d5b45d!important;
+             color:#fff;
+             min-width:100px
+         }
+         .ui-dialog-titlebar{
+            height: 30px;
+            background:#eee;
+            text-align: center;
+         } 
+         .ui-dialog-content{
+            background:#fff;
+         }
+         .ui-dialog-buttonpane{
+            padding: 4px 10px;
+            text-align: right;
+            background:#eee;
+         }
+         .ui-widget-overlay{
+            background:rgba(0,0,0,.3);
+            position: fixed;
+            left:0;
+            top:0;
+         }
+    </style>
+    <script data-main="index.js" src="../../asset/lib/require.js"></script>
+</head>
+<body>
+    <div class="loading" style="position:fixed;width:100%;height:100%;background:rgba(0,0,0,.2) url(img/loading.gif) center no-repeat;display:none;"></div>
+    <div id="PageMainContainer" class="main-content" v-cloak>
+        <div class="inline-block-container">
+            <ul id="DC_TimeLine" class="timeline">
+                <li v-for="period in Periods" @click="ShowPeriodDetail($event, $index, period)">
+                    <div class="upside">
+                        <div class="time">
+                            {{period.StartDate}}~{{period.EndDate}}
+                            <!--<span class="f-rigth" v-if="$index==Periods.length-1">{{period.EndDate}}</span>-->
+                        </div>
+
+                        <div class="points">
+                            <span class="f-left">第{{$index+1}}期</span>
+                            <span class="f-rigth" v-if="$index==Periods.length-1"></span>
+                        </div>
+                    </div>
+                    <div class="underside">
+                        {{DaysArr[$index]}}天
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="period-detail" v-if="PeriodDetail.Index!=null">
+            <h2>
+                第{{PeriodDetail.Index+1}}期
+                <span class="small">{{PeriodDetail.Start}}&nbsp;至&nbsp;{{PeriodDetail.End}}&nbsp;({{PeriodDetail.Days}}天)</span>
+            </h2>
+
+
+            <div  class="period-dates-container box-container">
+                <h3 class="title">报告日期</h3>
+                <p v-if="!PeriodDetail.Dates.length">无</p>
+                <div v-else class="period-dates">
+                    <div v-for="d in PeriodDetail.Dates" class="date" v-bind:style="{left: CalDateLeftOffset(d.Date) + 'px'}">
+                        <div class="date-point">&nbsp;</div>
+                        <p class="date-day">{{d.Date}}</p>
+                        <p class="date-title">{{RemoveTrustCode(d.Title)}}</p>
+                    </div>
+                    <div class="date end-date" v-bind:style="{left: CalDateLeftOffset(PeriodDetail.End) + 'px'}">
+                        <div class="date-point">&nbsp;</div>
+                        <p class="date-day">{{PeriodDetail.End}}</p>
+                        <p class="date-title">当期结束</p>
+                    </div>
+                    <div id="hrPeriodTimeline" class="line"> </div>
+                </div>
+            </div>
+
+
+            <div class="period-fees-container box-container">
+                <h3 class="title">当期费用</h3>
+                <p v-if="!PeriodDetail.Fees.length">无</p>
+                <ul v-else class="period-fees connectSort" id="fees">
+                    <li v-for="d in PeriodDetail.Fees" v-on:dblclick ="editFees()"><span>{{d.TrustFeeDisplayName}}</span><i class="close">X</i></li>
+                </ul>
+            </div>
+
+            <div class="period-events-container box-container">
+                <h3 class="title">事件</h3>
+                <p v-if="!PeriodDetail.Events.length">无</p>
+                <ul v-else class="period-dates">
+                    <li v-for="d in PeriodDetail.Events">{{d.EventDescription}}-{{d.EventStatus}}</li>
+                </ul>
+            </div>
+
+            <div class="payment-plan-container box-container">
+                <h3 class="title">偿付情景</h3>
+                <div class="payment-plan left" v-for="plan in PeriodDetail.Scenarios">
+                    <h4>{{plan.ScenarioName}}</h4>
+                    <ul class="payment-fees">
+                        <li v-for="level in plan.PaymentSequence.Levels">
+                            <span class="fee" v-for="fee in level.BondFees">{{fee.DisplayName}}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="payment-plan right" v-for="plan in PeriodDetail.Scenarios">
+                    <h4>{{plan.ScenarioName}}</h4>
+                    <ul class="payment-fees">
+                        <li v-for="level in plan.PaymentSequence.Levels">
+                            <span class="fee" v-for="fee in level.BondFees">{{fee.DisplayName}}</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="tool-container tool-right">
+        <div class="fees-tool tool">
+            <h3>费用工具栏</h3>
+            <ul class="fees-list list connectSort" id="fees-tool">
+                <li v-for="feeType in AllFees ">
+                    <span>{{feeType.DisplayName}}</span>
+                    <i class="close">X</i>
+                </li>
+            </ul>
+            <span class="arrow">费用工具栏</span>
+        </div>
+        <div class="event-tool tool">
+            <h3>事件工具栏</h3>
+            <ul class="event-list list">
+                <li v-for="eventType in AllEvents ">
+                    <span>{{eventType.ItemAliasValue}}</span>
+                </li>
+            </ul>
+            <span class="arrow">费用工具栏</span>
+        </div>
+        <div class="payment-plan-tool tool">
+            <h3>偿付情景工具栏</h3>
+            <ul class="event-list list">
+                <li>
+                    <span></span>
+                </li>
+            </ul>
+            <span class="arrow">工具栏</span>
+        </div>
+    </div>
+
+    <div id="dialog"></div>
+</body>
+</html>
