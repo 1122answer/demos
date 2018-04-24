@@ -44,5 +44,4 @@
     if(typeof window !== 'undefined' && window.Vue) {
         window.Vue.use(Toast)
     };
-    return Toast
 })()

@@ -48,7 +48,7 @@
           },
         },
 	}
-
+console.log(Vue)
   /**
    * 每个插件都有的install方法，用于安装插件
    * @param {Object} Vue - Vue类
@@ -101,6 +101,7 @@
     Vue.loading = Vue.prototype.$loading = $loading
   }
     if(typeof window !== 'undefined' && window.Vue) {
+        alert('a')
         window.Vue.use(LoadingPlugin)
     };
     return LoadingPlugin

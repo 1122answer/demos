@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
+    
+<style>
+    .toast {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    margin-left: -15vw;
+    padding: 2vw;
+    width: 30vw;
+    font-size: 4vw;
+    color: #fff;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 5vw;
+    z-index: 999;
+    }
+
+    .fade-enter-active{
+      transition:all .8s ease;
+
+    }
+    .fade-leave-active {
+      transition: all .8s ease;
+     
+    }
+    .fade-enter,.fade-leave-to {
+       transform: translateY(-100px);
+       opacity: 0;
+
+    }
+    .gd-message{
+      min-width: 380px;
+      box-sizing: border-box;
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ebeef5;
+    position: fixed;
+    left: 50%;
+    top: 20px;
+    transform: translateX(-50%);
+    background-color: #edf2fc;
+    transition: opacity 0.3s, transform .4s;
+    overflow: hidden;
+    padding: 15px 15px 15px 20px;
+    display: flex;
+    align-items: center;
+    }
+</style>
+</head>
+<body>
+
+<div id="app" >
+  <button @click="toast">{{ message }}</button>
+     <transition name="fade">
+      
+      <p class="info" v-show="show">{{tab}}</p>
+    </transition>
+</div>
+<script type="text/x-template" id="message-template">
+   <transition name="fade">
+        <div v-bind:class="[
+        'gd-message',
+         type ? `gd-message--${type}` : '',
+         center ? 'is-center' : '',
+         showClose ? 'is-closable' :'',
+         customClass
+        ]"
+        v-show="visible">
+
+        <i v-bind:class="iconClass" v-if="iconClass"></i>
+        <i v-bind:class="typeClass" v-else></i>
+        <slot>
+          <p class="message_content">
+            {{message}}
+          </p>
+        </slot>
+        <i v-if="showClose" class="message_closeBtn" @click="close"></i>
+        </div>
+    </transition>
+</script>
+<script src="message.js"></script>
+<script type="text/javascript">
+  var app = new Vue({
+      el: '#app',
+      data: {
+          message : "Messages插件" ,
+          tab: 'bj',
+          show:false
+      },
+      //template:'<span></span>',
+      methods:{
+      	toast: function() {
+           this.$message.success({
+            message:'nihao',
+            center:true
+           });
+      	}
+      },
+      mounted:function(){
+        console.log(this)
+        console.log(this.$options)
+        console.log(this.$data.message = '123')
+        console.log(this.$el)
+      }
+    })
+  console.log(app)
+</script>
+</body>
+</html>
