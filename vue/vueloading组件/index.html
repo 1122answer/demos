@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
+    <script data-main="main" src="require.js"></script>
+<style>
+.gd-loading-fix {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 8;
+    width: 100%;
+    height: 100%;
+    background-color: hsla(0,0%,100%,.9);
+}
+.gd-loading {
+    color: #2d8cf0;
+    vertical-align: middle;
+    text-align: center;
+}
+.gd-loading-fix .gd-loading-main {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
+.gd-loading-fix .gd-loading-dot {
+    display: inline-block;
+}
+.gd-loading-dot {
+    position: relative;
+    display: block;
+    border-radius: 50%;
+    background-color: #2d8cf0;
+    width: 20px;
+    height: 20px;
+    -webkit-animation: ani-spin-bounce 1s 0s ease-in-out infinite;
+    animation: ani-spin-bounce 1s 0s ease-in-out infinite;
+}
+@keyframes ani-spin-bounce{
+0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+}
+
+100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 0;
+}
+}
+ .demo-spin-container{
+      display: inline-block;
+        width: 200px;
+        height: 100px;
+        position: relative;
+        border: 1px solid #eee;
+    }
+</style>
+</head>
+<body>
+
+<div id="app" >
+    <div class='demo-spin-container'>
+      <Loading fix v-if='loading' loading-text='数据加载中'></Loading>
+    </div>
+    <button @click='loadData'>加载数据</button>
+</div>
+<script type="text/x-template" id="gd-loading-template">
+   <transition name="fade">
+        <div :classes='classes' v-if='follscreenVisble'>
+          <div :class='mainClasses'>
+            <span :class='dotClasses'></span>
+            <div :class='textClasses'><slot></slot></div>
+          </div>
+        </div>
+    </transition>
+</script>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/vue/2.5.16/vue.js"></script>
+    <script data-main="main" src="require.js"></script>
+<style>
+.gd-collapse>.gd-collapse-item>.gd-collapse-header {
+    height: 38px;
+    line-height: 38px;
+    padding-left: 32px;
+    color: #666;
+    cursor: pointer;
+    position: relative;
+}
+.gd-collapse-content {
+    color: #495060;
+    padding: 15px 16px;
+    background-color: #fff;
+    overflow: hidden;
+    height: auto;
+}
+.gd-collapse>.gd-collapse-item:first-child {
+    border-top: 0;
+}
+.gd-collapse>.gd-collapse-item {
+    border-top: 1px solid #dddee1;
+}
+.gd-collapse {
+    background-color: #f7f7f7;
+    border-radius: 3px;
+    border: 1px solid #dddee1;
+}
+.fade-enter-active {
+  transition: all .3s ease;
+}
+.fade-leave-active {
+  transition: all .3s ease;
+}
+.fade-enter,.fade-leave-active {
+  opacity:0;
+}
+</style>
+</head>
+<body>
+
+<div id="app" >
+    <Collapse v-model='value1' v-on:on-change='change' accordion>
+        <Panel name='a'>
+           vue 项目 
+           <div slot='content'>
+               大型项目经大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验验
+           </div>
+        </Panel>
+        <Panel name='b'>
+           vue 组件 
+           <div slot='content'>
+               编写组件的能力大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验
+           </div>
+        </Panel>
+           <Panel name='c'>
+           es6语法
+           <div slot='content'>
+               未来的语法大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验大型项目经验
+           </div>
+        </Panel>
+    </Collapse>
+</div>
+<script type="text/x-template" id="gd-loading-template">
+   <transition name="fade">
+        <div :classes='classes' v-if='follscreenVisble'>
+          <div :class='mainClasses'>
+            <span :class='dotClasses'></span>
+            <div :class='textClasses'><slot></slot></div>
+          </div>
+        </div>
+    </transition>
+</script>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>
