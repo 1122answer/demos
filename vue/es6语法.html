@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+	//字符串
+		{
+			console.log('a',`\u0061`);
+			console.log('s',`\u20007`)
+		}
+		{
+			let str='string'
+			console.log('includes', str.includes('r'))
+			console.log('includes', str.startsWith('str'))
+			console.log('includes', str.endsWith('ng'))
+		}
+		{
+			let str='abc'
+			console.log(str.repeat(3))
+		}
+		{
+			console.log('1'.padStart(2,'0'))
+			console.log('1'.padEnd(2,'0'))
+		}
+		{
+			let user={
+				name:'list',
+				info:'hello world'
+			}
+			//标签模板
+			//abc`i am ${user.name}, ${user.info}`
+		}
+		{
+			
+		}
+		console.log('函数扩展 参数默认值 rest 参数 箭头函数 扩展运算符 this绑定 尾调用')
+		{
+			function test(x,y='world'){
+				console.log('默认值',x,y)
+			}
+			test('hello');
+			test('hello','kill');
+			
+		}{
+			let x='xxxx';
+			function test2(x,y=x){
+				console.log('作用域',x,y); // 默认值x ,如果有传参则区传参，没有就从定义里面找
+				
+			}
+			test2('aaaa');
+			let a='test'
+			function test3(c,b=a){
+				console.log('作用域',c,b);
+				
+			}
+			test3('kill');
+		}
+		{
+			function test(...arg){
+				for (let v of arg) {
+					console.log('test',v)	
+				}
+			}
+			test(1,2,3,4,'a') //将参数转换为数组
+		}
+		{
+			//扩展运算符
+			console.log(...[1,2,4]); //把数组拆成离散的值
+			console.log('a',...[1,2,4])
+		}{
+			//箭头函数
+			let arrow=v=>v*2;
+			let arrow2=()=>5;
+			console.log('arrrow:',arrow(3));
+			console.log('arrrow2:',arrow());
+
+		}
+		{
+			//尾调用
+			function tail(x){
+				console.log('tail',x)
+			}
+			function fx(x){
+				return tail(x)
+			}
+			fx(123)
+		}
+		console.log('简洁表示法，属性表达式，扩展运算符，新增方法')
+		{
+		//简介表示法
+
+			let o =1;
+			let k = 2;
+			let es5 ={
+				o:o,
+				k:k
+			}
+			let es6={
+				o,
+				k
+			}
+			console.log(es5,es6);
+			let es5_method={
+				hello:function () {
+					console.log('hello')
+				}
+			}
+			let es6_method={
+				hello() {
+					console.log('hello')
+				}
+			}
+		}
+		{
+			//属性表达式
+			let a= 'b';
+			let es6_obj={
+				a:'c',
+				b:'c'
+			}
+			let es6_obj={
+				[a]:'c' // 变量a作为k值
+			}
+			
+		}
+		{
+			//新增API
+			console.log('数组', Object.is([],[]), []===[]);
+			console.log('拷贝', Object.assign({a:'a'},{b:'b'})) //浅拷贝，不拷贝不可枚举属性
+			let test={k:123, o:456};
+			for(let [key, value] of Object.entries(test)){
+				console.log([key,value])
+			}
+		}
+		{
+			
+		}
+	</script>
+</body>
+</html>

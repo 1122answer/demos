@@ -1,0 +1,89 @@
+<!doctype html>
+
+<meta charset="utf-8">
+<title>Dagre D3 Demo: Shapes</title>
+
+<link rel="stylesheet" href="demo.css">
+<script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+<script src="../dist/dagre-d3.js"></script>
+
+<style id="css">
+body {
+  font: 300 14px 'Helvetica Neue', Helvetica;
+}
+
+.node rect,
+.node circle,
+.node ellipse,
+.node polygon {
+  stroke: #333;
+  fill: #fff;
+  stroke-width: 1.5px;
+}
+
+.edgePath path {
+  stroke: #333;
+  fill: #333;
+  stroke-width: 1.5px;
+}
+</style>
+
+<h1>Dagre D3 Demo: Shapes</h1>
+
+<svg width=960 height=600><g/></svg>
+
+<section>
+<p>A sample that shows the different node shapes available in dagre-d3.
+</section>
+
+<script id="js">
+  var json = [{
+    code:1,
+    name:'a',
+    children:[{
+      code:2,
+      name:'b',
+      children:[{
+        code:4,
+        name:'d'
+      }]
+    },{
+      code:3,
+      name:'c'
+    }]
+    }]
+  function getData(data){
+    data.forEach(function(i){
+      g.setNode(i.code,{label:i.name});
+      if(i.children && i.children.length>0){
+        getData(i.children)
+        i.children.forEach(function(i2){
+          g.setEdge(i.code,i2.code,{label:i.name,curve: d3.curveBasis})
+        })
+      }
+    })
+  }
+// Create a new directed graph
+var g= new dagreD3.graphlib.Graph({compound:true}).setGraph({})
+.setDefaultEdgeLabel(function() { return {}; });
+//g.setNode('木子伊伊',{shape:'rect'});
+getData(json)
+
+// g.setNode(1,{label:'a'});
+// g.setNode(2,{label:'b'});
+// g.setNode(3,{label:'b'});
+
+// g.setEdge(1,2)
+// g.setEdge(1,3)
+var svg = d3.select('svg'),
+    inner= svg.select('g')
+// Set up zoom support
+
+// Create the renderer
+var render = new dagreD3.render();
+// Run the renderer. This is what draws the final graph.
+render (inner, g)
+// Center the graph
+</script>
+
+<script src="demo.js"></script>
